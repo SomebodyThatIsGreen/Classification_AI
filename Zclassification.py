@@ -11,7 +11,7 @@ interpretor.allocate_tensors()
 #load our labels / list of classes
 labels_path = os.path.join(script_dir, 'labels.txt')
 with open(labels_path, 'r') as f:
-    labels = [line.strip() for line in f.readlines]
+    labels = [line.strip() for line in f.readlines()]
 
 #Load and preprocess the image
 def load_and_preprocess_image(image_path):
