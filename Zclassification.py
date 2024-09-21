@@ -20,3 +20,22 @@ def load_and_preprocess_image(image_path):
     img_array = np.array(img, dtype=np.float32)
     img_array /= 255.0
     return img_array
+
+    #Predict the class of the image and confidence level
+    def classify_image(image_path):
+        img_array = load_and_preprocess_image(image_path)
+        input_details = interpretor.get_input_details()
+        output_detail = interpretor.get_output_details()
+
+        interpretor.set_tensor(input_detail[0]['index'], img_array)
+        interpretor.invoke()
+        predictions = interpretor.get_tensor(output_detail[0]['index'])
+        predicted_class = np.argmax(predictions, axis=1)
+        confidence = np.max(predictions)
+        return labels[predicted_class[0]], confidence
+if __name__ == "__main__":
+    for file_name in os.listdir(script_dir):
+        if file_name.lower().endswith(('.jpg','jpeg','.png')):
+            image+path = os.path.join(script_dir, file_name)
+            predicted_class, confidence = classify_image(image_path)
+            print(f'Image: {file_name} | Predicted class: {predicted_class} | Confidence: {confidence: .2f}')
